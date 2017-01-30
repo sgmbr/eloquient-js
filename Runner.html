@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
- <meta charset="utf-8">
- <title>Eloquent JavaScript Chapter 6</title>
- <!-- include source files here... -->
- <script src="src/script.js"></script>
- <div id="divDisplay"></div>
+    <meta charset="utf-8">
+    <title>Eloquent JavaScript Chapter 7 - Electric Life</title>
+    <!-- include source files here... -->
+    <script src="src/script.js"></script>
+    <script src="src/animateworld.js"></script>
 </head>
 
 <body>
- <script>
- /*
- var theOlympics;
- var go = function () {
- var  theDisplay;
-	 theOlympics = Controller.setup();
-	 theDisplay = document.getElementById("divDisplay");
-	 document.body.style.fontFamily = 'Courier New';
-	 theDisplay.innerHTML = theOlympics.getAll();
-	 console.log(theOlympics);
- };
- window.onload = go;
- */
- </script>
-</body> 
+     <script>
+     animateWorld(new LifelikeWorld(
+       ["####################################################",
+        "#                 ####         ****              ###",
+        "#   *  @  ##                 ########       OO    ##",
+        "#   *    ##        O O                 ****       *#",
+        "#       ##*                        ##########     *#",
+        "#      ##***  *         ****                     **#",
+        "#* **  #  *  ***      #########                  **#",
+        "#* **  #      *               #   *              **#",
+        "#     ##              #   O   #  ***          ######",
+        "#*            @       #       #   *        O  #    #",
+        "#*                    #  ######                 ** #",
+        "###          ****          ***                  ** #",
+        "#       O                        @         O       #",
+        "#   *     ##  ##  ##  ##               ###      *  #",
+        "#   **         #              *       #####  O     #",
+        "##  **  O   O  #  #    ***  ***        ###      ** #",
+        "###               #   *****                    ****#",
+        "####################################################"],
+       {"#": Wall,
+        "@": Tiger,
+        "O": SmartPlantEater, // from previous exercise
+        "*": Plant}
+     ));
+     </script>
+</body>
 </html>

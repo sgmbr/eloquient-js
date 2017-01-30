@@ -266,6 +266,55 @@ PlantEater.prototype.act = function(view) {
         return {type: "move", direction: space};
 };
 
+function SmartPlantEater() {
+    this.energy = 30;
+    this.food = "*";
+    this.direction = randomElement(directionNames);
+}
+SmartPlantEater.prototype.isHungry = function() {
+    return this.energy < 72;
+};
+SmartPlantEater.prototype.act = function(view) {
+    var space = view.find(" ");
+    var plants = view.findAll(this.food);
+    var plant = view.find(this.food);
+
+    if (this.energy > 80 && space)
+        return {type: "reproduce", direction: space};
+
+    if (this.isHungry() && plants.length > 1) {
+        this.direction = plant;
+        return {type: "eat", direction: plant};
+    }
+
+    if (view.look(this.direction) != " ")
+        this.direction = space || "s";
+    return {type: "move", direction: this.direction};
+};
+
+function Tiger() {
+    this.energy = 100;
+    this.food = "O";
+    this.direction = randomElement(directionNames);
+}
+Tiger.prototype.isHungry = function() {
+    return this.energy < 250;
+};
+Tiger.prototype.act = function(view) {
+    var space = view.find(" ");
+    var herbivore = view.find(this.food);
+
+    if (this.energy > 300 && space)
+        return {type: "reproduce", direction: space};
+
+        if (this.isHungry() && herbivore)
+            return {type: "eat", direction: herbivore};
+
+        if (view.look(this.direction) != " ")
+            this.direction = space || "s";
+        return {type: "move", direction: this.direction};
+};
+
 /*
 var world = new World(plan, {"#": Wall, "o": BouncingCritter});
 console.log(world.toString());
@@ -273,7 +322,6 @@ for (var i = 0; i < 5; i++) {
     world.turn();
     console.log(world.toString());
 }
-*/
 
 var valley = new LifelikeWorld(
     ["############################",
@@ -289,6 +337,7 @@ var valley = new LifelikeWorld(
      "##****     ###***       *###",
      "############################"],
     {"#": Wall,
-     "O": PlantEater,
+     "O": SmartPlantEater,
      "*": Plant}
 );
+*/
