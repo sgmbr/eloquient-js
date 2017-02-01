@@ -7,11 +7,12 @@
     <script src="src/script.js"></script>
     <script src="src/animateworld.js"></script>
     <style>
-        body {font-size: 2em;}
+        body {font-family: monospace; font-size: 2em;}
     </style>
 </head>
 
 <body>
+    <h1>Electric Life</h1>
      <script>
      animateWorld(new LifelikeWorld(
        ["####################################################",
@@ -38,5 +39,11 @@
         "*": Plant}
      ));
      </script>
+     <p>
+        &nbsp;&nbsp;&nbsp;&nbsp;#: Wall<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;@: Tiger (eats PlantEater)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;O: PlantEater (eats Plant)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;*: Plant (grows over time)
+     </p>
 </body>
 </html>
