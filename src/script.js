@@ -272,7 +272,7 @@ function SmartPlantEater() {
     this.direction = randomElement(directionNames);
 }
 SmartPlantEater.prototype.isHungry = function() {
-    return this.energy < 72;
+    return this.energy < 74;
 };
 SmartPlantEater.prototype.act = function(view) {
     var space = view.find(" ");
@@ -295,7 +295,7 @@ SmartPlantEater.prototype.act = function(view) {
 function Tiger() {
     this.energy = 100;
     this.food = "O";
-    this.direction = randomElement(directionNames);
+    //this.direction = randomElement(directionNames);
 }
 Tiger.prototype.isHungry = function() {
     return this.energy < 250;
@@ -310,9 +310,14 @@ Tiger.prototype.act = function(view) {
         if (this.isHungry() && herbivore)
             return {type: "eat", direction: herbivore};
 
+        if (space) {
+            return {type: "move", direction: space};
+        }
+        /*
         if (view.look(this.direction) != " ")
             this.direction = space || "s";
         return {type: "move", direction: this.direction};
+        */
 };
 
 /*
