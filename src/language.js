@@ -13,10 +13,21 @@ function parseExpression(program) {
     return parseApply(expr, program.slice(match[0].length));
 }
 
+/*
 function skipSpace(string) {
     var first = string.search(/\S/);
     if (first == -1) return "";
+    if (string[first] == "#") {
+        first = string.search(/\n/) + 1;
+        return skipSpace(string.slice(first));
+    }
     return string.slice(first);
+}
+*/
+
+function skipSpace(string) {
+    var skippable = string.match(/^(\s|#.*)*/);
+    return string.slice(skippable[0].length);
 }
 
 function parseApply(expr, program) {
@@ -104,6 +115,20 @@ specialForms["define"] = function(args, env) {
     env[args[0].name] = value;
     return value;
 };
+specialForms["set"] = function(args, env) {
+    if (args.length != 2 || args[0].type != "word")
+        throw new SyntaxError("Bad use of define");
+    var varName = args[0].name;
+    var value = evaluate(args[1], env);
+
+    for (var scope = env; scope; scope = Object.getPrototypeOf(scope)) {
+        if (Object.prototype.hasOwnProperty.call(scope, varName)) {
+            scope[varName] = value;
+            return value;
+        }
+    }
+    throw new ReferenceError("Setting undefined variable " + varName);
+};
 specialForms["fun"] = function(args, env) {
     if (!args.length)
         throw new SyntaxError("Functions need a body");
@@ -139,6 +164,16 @@ topEnv["false"] = false;
 topEnv["print"] = function(value) {
     console.log(value);
     return value;
+};
+
+topEnv["array"] = function() {
+    return Array.prototype.slice.call(arguments, 0);
+};
+topEnv["length"] = function(array) {
+    return array.length;
+};
+topEnv["element"] = function(array, n) {
+    return array[n];
 };
 
 function run() {
