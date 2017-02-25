@@ -1,6 +1,7 @@
-/* jshint undef: true, unused: true, esversion: 6, asi: true*/
+/* jshint undef: true, unused: true, esversion: 6, asi: true, browser: true, devel:true*/
 
 function main() {
+    /*
     let simpleLevelPlan = [
       "                      ",
       "                      ",
@@ -14,5 +15,9 @@ function main() {
     ];
 
     let simpleLevel = new Level(simpleLevelPlan)
-    console.log(simpleLevel.width, "by", simpleLevel.height)
+    let display = new DOMDisplay(document.body, simpleLevel)
+
+    console.log(simpleLevel)
+    */
+    runGame(GAME_LEVELS, DOMDisplay)
 }
