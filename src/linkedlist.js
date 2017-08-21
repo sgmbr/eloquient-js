@@ -27,6 +27,21 @@ class LinkedList {
         currentNode.next = newNode
     }
 
+    revert() {
+        let currentNode = this.head
+        let previous = null
+        let next = null
+
+        while (currentNode) {
+            next = currentNode.next
+            currentNode.next = previous
+            previous = currentNode
+            currentNode = next
+        }
+
+        this.head = previous
+    }
+
     toString() {
         let currentNode = this.head
         let result = ''
