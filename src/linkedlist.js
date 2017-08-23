@@ -12,19 +12,76 @@ class LinkedList {
         this.head = null
     }
 
-    add(value) {
-        let newNode = new Node(value)
-        let currentNode = this.head
+    unshift(data) {
+        let newNode = new Node(data)
+        newNode.next = this.head
+        this.head = newNode
+    }
 
-        if (!currentNode) {
+    push(data) {
+        let newNode = new Node(data)
+
+        if (!this.head) {
             this.head = newNode
             return
         }
 
+        let currentNode = this.head
         while (currentNode.next) {
             currentNode = currentNode.next
         }
         currentNode.next = newNode
+    }
+
+    search(key) {
+        let currentNode = this.head
+        while (currentNode) {
+            if (currentNode.data == key) {
+                return currentNode
+            }
+            currentNode = currentNode.next
+        }
+        return null
+    }
+
+    deleteNode(key) {
+        if (this.head && this.head.data == key) {
+            this.head = this.head.next
+            return
+        }
+
+        let currentNode = this.head.next
+        let previous = this.head
+        while (currentNode) {
+            if (currentNode.data == key) {
+                previous.next = currentNode.next
+                return
+            }
+            previous = currentNode
+            currentNode = currentNode.next
+        }
+        throw new Error(`Node not found. key: ${key}`)
+    }
+
+    deleteNodeAt(position) {
+        if (position === 0) {
+            this.head = this.head.next
+            return
+        }
+
+        let currentNode = this.head.next
+        let previous = this.head
+        let currentPosition = 1
+        while (currentNode) {
+            if (currentPosition == position) {
+                previous.next = currentNode.next
+                return
+            }
+            previous = currentNode
+            currentNode = currentNode.next
+            currentPosition++
+        }
+        throw new Error(`Node not found. position: ${position}`)
     }
 
     revert() {
